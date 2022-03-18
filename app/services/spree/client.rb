@@ -1,0 +1,23 @@
+class Spree::Client
+  include HTTParty
+  base_uri 'https://demo.spreecommerce.org/api/v2/storefront/'
+
+  def initialize
+    #we can implemnt auth here in future
+  end
+
+  def post(url , options={})
+    json_response(self.class.post(url,options))
+  end
+
+  def headers(token)
+    {
+      "Content-Type": "application/vnd.api+json",
+      "X-Spree-Order-Token": token
+    }
+  end
+
+  def json_response(response)
+    JSON.parse(response.body)['data'].deep_symbolize_keys
+  end
+end
