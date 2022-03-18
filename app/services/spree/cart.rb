@@ -24,5 +24,6 @@ class Spree::Cart < Spree::Client
     }
     response = client.post("#{CART_URL}/add_item", body)
     cart.update(data: response[:attributes], metadata: response.except(:id, :type, :attributes))
+    cart
   end
 end

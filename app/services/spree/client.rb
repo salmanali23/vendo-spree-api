@@ -12,12 +12,13 @@ class Spree::Client
 
   def headers(token)
     {
-      "Content-Type": "application/vnd.api+json",
+      "Content-Type": "application/json",
       "X-Spree-Order-Token": token
     }
   end
 
   def json_response(response)
+    raise response["error"] if response.has_key?("error")
     JSON.parse(response.body)['data'].deep_symbolize_keys
   end
 end
